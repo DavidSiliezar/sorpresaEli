@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // AJUSTE 2: Servir archivos estáticos (esto ya lo tenías, está bien)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Public')));
 
 const scenesData = [
     {
