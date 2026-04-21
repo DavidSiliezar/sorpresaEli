@@ -2,21 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-// 1. Primero creamos la aplicación
 const app = express();
-const PORT = 3000;
 
-// 2. Configuramos los middlewares (CORS y carpeta pública)
+// AJUSTE 1: Render usa puertos aleatorios, esto permite que la app se adapte
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
-// IMPORTANTE: Esta línea le dice a Node que busque los archivos en la carpeta "public"
+
+// AJUSTE 2: Servir archivos estáticos (esto ya lo tenías, está bien)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 3. Datos de las escenas
 const scenesData = [
     {
         id: 1,
-        // Eliminado el "." inicial para que la ruta sea correcta desde el navegador
-       image: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1000&auto=format&fit=crop", 
+        // He dejado tu imagen de prueba para asegurar que cargue algo al inicio
+        image: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1000&auto=format&fit=crop", 
         text: "¿Sabías algo?",
         duration: 4000,
         color: "#ffffff"
@@ -44,13 +44,17 @@ const scenesData = [
     }
 ];
 
-// 4. Rutas de la API
+// AJUSTE 3: Esta ruta es la que quita el error "Cannot GET /"
+// Obliga al servidor a entregar el index.html al entrar a la URL principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.get('/api/scenes', (req, res) => {
     console.log("Petición de escenas recibida desde el frontend");
     res.json(scenesData);
 });
 
-// 5. Encender el servidor
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor listo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor listo y corriendo en el puerto ${PORT}`);
 });
