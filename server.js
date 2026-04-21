@@ -47,7 +47,7 @@ const scenesData = [
 // AJUSTE 3: Esta ruta es la que quita el error "Cannot GET /"
 // Obliga al servidor a entregar el index.html al entrar a la URL principal
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'index.html'));
 });
 
 app.get('/api/scenes', (req, res) => {
